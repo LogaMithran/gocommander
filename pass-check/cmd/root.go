@@ -5,9 +5,8 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/spf13/cobra"
+	"os"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -18,7 +17,9 @@ var rootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(args)
+		if len(args) == 0 {
+			fmt.Printf("Give any one of the command to proceed further %v | %v", "get", "validate")
+		}
 	},
 }
 

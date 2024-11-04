@@ -5,9 +5,12 @@ package cmd
 
 import (
 	"fmt"
+	"regexp"
 
 	"github.com/spf13/cobra"
 )
+
+var fpassword string
 
 // validateCmd represents the validate command
 var validateCmd = &cobra.Command{
@@ -15,20 +18,28 @@ var validateCmd = &cobra.Command{
 	Short: "Validates the given password is strong or not",
 	Long:  `Validate will validates the given password is strong or not.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("validate called")
+		hasUpper := regexp.MustCompile(`[A-Z]`).MatchString(fpassword)
+		hasLower := regexp.MustCompile(`[a-z]`).MatchString(fpassword)
+		hasNumber := regexp.MustCompile(`[0-9]`).MatchString(fpassword)
+		hasSpecial := regexp.MustCompile(`[!@#~$%^&*()+|_.,]`).MatchString(fpassword)
+
+		// Return true if all criteria are met
+		if hasUpper && hasLower && hasNumber && hasSpecial {
+			fmt.Printf("Your password << %v >> is strong", fpassword)
+		} else {
+			fmt.Printf("Your password << %v >> is not strong", fpassword)
+		}
+
 	},
 }
 
 func init() {
+	// Here you will define your flags and configuration settings.
+	validateCmd.Flags().StringVarP(&fpassword, "password", "p", "", "To give password using the flag")
+	if err := validateCmd.MarkFlagRequired("password"); err != nil {
+		fmt.Println(err)
+	}
+
 	rootCmd.AddCommand(validateCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// validateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// validateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
