@@ -10,7 +10,7 @@ Go version 1.23.0
 
 ## CLIs
 
-| Name                    | go                              |
-|-------------------------|---------------------------------|
-| Password strength check | [pass-check](README.md)         |
-| Free port check         | [port-check](../port/README.md) |
+| Name                    | go                                        |
+|-------------------------|-------------------------------------------|
+| Password strength check | [pass-check](password/PASS_CLI_README.md) |
+| Free port check         | [port-check](port/PORT_README.md)         |
